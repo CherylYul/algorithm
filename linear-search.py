@@ -31,6 +31,15 @@ tests.append(
     }
 )
 print(tests)
+
+
+def linear_search(array, search_value):
+    # Create a variable position
+    i = 0
+    while i < len(array):
+        # if number in the cards equal the seeking value then return position
+        if array[i] == search_value:
+            return i
         # if not increment the position by adding 1 and continue checking next value in the list
         i += 1
     # If the value was not found then return -1
