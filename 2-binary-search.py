@@ -1,3 +1,60 @@
+# General Problem: start guessing the position number a friend thinking of from ascending order.
+# Your friend will tell you the number he/she thinking is higher or lower the number you guess.
+
+tests = []
+# Case 1: Number your friends thinking is in the list
+tests.append(
+    {
+        "input": {
+            "cards": [3, 5, 7, 9, 12, 16, 20, 25, 29, 33, 37, 55, 98, 101],
+            "search_value": 33,
+        },
+        "output": 9,
+    }
+)
+# Case 2: Number your friends thinking is not in the list, return -1 position
+tests.append(
+    {
+        "input": {
+            "cards": [-5, -1, 33, 38, 39, 40, 71, 72, 77, 80],
+            "search_value": 35,
+        },
+        "output": -1,
+    }
+)
+# Case 3: Number your friends thinking have multiple position in the list, return the first position
+tests.append(
+    {
+        "input": {
+            "cards": [
+                2,
+                3,
+                19,
+                19,
+                19,
+                19,
+                23,
+                23,
+                56,
+                56,
+                77,
+                88,
+                99,
+                199,
+                199,
+                199,
+                199,
+                200,
+                200,
+            ],
+            "search_value": 199,
+        },
+        "output": 13,
+    }
+)
+print(tests)
+
+
 def binary_search(array, search_value):
     # Create variable position of lowest and highest position
     lo, hi = 0, len(array) - 1
