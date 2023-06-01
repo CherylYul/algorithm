@@ -40,6 +40,14 @@ test.append(
     }
 )
 
+test.append(
+    {
+        "input": [6, 0, 6, 6, 0],
+        "output": 4,
+        "detailed-pairs": [(1, 2), (1, 5), (3, 5), (4, 5)],
+    }
+)
+
 
 def count_inversions_brute_force(a):
     count = 0
@@ -87,4 +95,4 @@ def merge(left_a, right_a):
     return a + left_a[i:] + right_a[j:], inv
 
 
-print(count_inversions(test[2]["input"]))
+print(count_inversions(test[3]["input"]))
