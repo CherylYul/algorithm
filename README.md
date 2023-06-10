@@ -6,7 +6,11 @@ My coding exercise when studying algorithms, data structures, and solving other 
 - [x] Insertion sort
 - [x] Selection sort
 - [x] Merge sort
-- [ ] Quick sort
+- [x] Quick sort
+- [ ] Heap sort
+- [ ] Counting sort
+- [ ] Radix sort
+- [ ] Bucket sort
 
 ### **Divdide and Conquer**
 
