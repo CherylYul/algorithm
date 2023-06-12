@@ -40,7 +40,7 @@ def last_node(a):
 
 # Heap sort
 
-
+# O(logn)
 def max_heapify(a, i):
     l, r = left(i), right(i)
     largest = i
@@ -67,6 +67,7 @@ def min_heapify(a, i):
     return a
 
 
+# O(n)
 def build_max_heap(a):
     mid = len(a) / 2 - 1
     for i in range(mid, -1, -1):
@@ -79,6 +80,7 @@ def build_min_heap(a):
         min_heapify(a, i)
 
 
+# O(nlogn)
 def heapsort_increase(a):
     build_max_heap(a)
     for i in range(len(a) - 1, 1, -1):
