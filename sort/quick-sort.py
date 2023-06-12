@@ -1,3 +1,5 @@
+import random
+
 tests = []
 # Case 1: the rating already sorted
 tests.append(
@@ -26,13 +28,13 @@ def quick_sort(a, start=0, end=None):
     if end is None:
         end = len(a) - 1
     if start < end:
-        pivot = partition(a, start, end)
+        pivot = partition2(a, start, end)
         quick_sort(a, start, pivot - 1)
         quick_sort(a, pivot + 1, end)
     return a
 
 
-def partition(a, start=0, end=None):
+def partition1(a, start=0, end=None):
     if end is None:
         end = len(a) - 1
     l, r = start, end - 1
@@ -48,6 +50,31 @@ def partition(a, start=0, end=None):
         return l
     else:
         return end
+
+
+def partition2(a, start, end):
+    x = a[end]
+    i = start - 1
+    for j in range(start, end - 1, 1):
+        if a[j] <= x:
+            i += 1
+            a[i], a[j] = a[j], a[i]
+    a[i + 1], a[end] = a[end], a[i + 1]
+    return i + 1
+
+
+def randomized_quicksort(a, start, end):
+    if start < end:
+        pivot = randomized_partition(a, start, end)
+        randomized_quicksort(a, start, pivot - 1)
+        randomized_quicksort(a, pivot + 1, end)
+    return a
+
+
+def randomized_partition(a, start, end):
+    i = random.randint(start, end)
+    a[end], a[i] = a[i], a[end]
+    return partition2(a, start, end)
 
 
 print(quick_sort(tests[2]["input"]) == tests[2]["output"])
