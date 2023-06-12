@@ -7,7 +7,7 @@ My coding exercise when studying algorithms, data structures, and solving other 
 - [x] Selection sort
 - [x] Merge sort
 - [x] Quick sort
-- [ ] Heap sort
+- [x] Heap sort
 - [ ] Counting sort
 - [ ] Radix sort
 - [ ] Bucket sort
