@@ -74,6 +74,13 @@ def build_max_heap(a):
         max_heapify(a, i)
 
 
+# [1,2,3] => [3,1,2]
+def build_max_heap2(a):
+    new_a = [a[0]]
+    for i in range(1, len(a)):
+        max_heap_insert(new_a, a[i])
+
+
 def build_min_heap(a):
     mid = len(a) / 2 - 1
     for i in range(mid, -1, -1):
@@ -100,8 +107,6 @@ def heapsort_decrease(a):
 
 
 # priority queues
-
-
 def heap_maximum(a):
     return a[0]
 
