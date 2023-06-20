@@ -3,14 +3,14 @@ My coding exercise when studying algorithms, data structures, and solving other 
 ### **Sorting**
 
 - [x] Bubble sort
-- [x] Insertion sort
 - [x] Selection sort
+- [x] Insertion sort
 - [x] Merge sort
 - [x] Quick sort
 - [x] Heap sort
-- [ ] Counting sort
-- [ ] Radix sort
-- [ ] Bucket sort
+- [x] Counting sort
+- [x] Radix sort
+- [x] Bucket sort
 
 ### **Divdide and Conquer**
 
