@@ -1,27 +1,41 @@
 import random
 
 tests = []
-# Case 1: the rating already sorted
+
 tests.append(
     {
         "input": [2.4, 3.5, 5.5, 6.7, 7.7, 8.7, 9.0, 9.1],
         "output": [2.4, 3.5, 5.5, 6.7, 7.7, 8.7, 9.0, 9.1],
     }
 )
-# Case 2: the rating is randomly
+
 tests.append(
     {
         "input": [6.9, 3.5, 5.5, 4.0, 4.1, 4.2, 6.3, 7.1],
         "output": [3.5, 4.0, 4.1, 4.2, 5.5, 6.3, 6.9, 7.1],
     }
 )
-# Case 3: the rating is in decreasing order also repeating list
+
 tests.append(
     {
         "input": [9.9, 9.8, 9.4, 9.4, 9.4, 9.2, 9.1, 9.0, 8.9, 8.8, 8.8, 8.7],
         "output": [8.7, 8.8, 8.8, 8.9, 9.0, 9.1, 9.2, 9.4, 9.4, 9.4, 9.8, 9.9],
     }
 )
+
+"""
+Merge sort requires allocating additional space, and memory allocation is far 
+expensive than comparisons and swapping, quick sort solves it
+
+- Base case: the list only contains 1 element or not, return it. 
+- Divide step 1: pick a random element as pivot
+- Divide step 2: do partitioning: smaller or equal to pivot comes lhs, larger comes rhs
+- Combine: merge 2 lists
+
+Average case: Big O(nlog), pivot fairly balanced
+Worst case: Big O(n^2), pivot unbalanced
+Quick sort best because efficient on average, sort in place, less constants
+"""
 
 
 def quick_sort(a, start=0, end=None):
