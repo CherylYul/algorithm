@@ -21,6 +21,16 @@ tests.append(
     }
 )
 
+"""
+Use binary data structure to manage information, heap sort sorts in place, better than
+merge sort (sort not in place)
+
+- left: compute 2i by shifting the binary representation of i left by one bit position
+- right: compute 2i+1 by shifting the binary representation of i left by one bit position
+and then adding in a 1 as the low-order bit
+- parent: compute i/2 by shifting i right one bit position
+"""
+
 
 def parent(i):
     return (i + 1) / 2 - 1  # parent = i / 2
@@ -38,9 +48,15 @@ def last_node(a):
     return len(a) - 1
 
 
-# Heap sort
+"""
+Heap sort operations:
+Step 1: build a min heap, which is O(nlogn)
+Step 2: extract all n elements of the heap, which is O(nlogn)
 
-# O(logn)
+O(nlogn)
+"""
+
+
 def max_heapify(a, i):
     l, r = left(i), right(i)
     largest = i
