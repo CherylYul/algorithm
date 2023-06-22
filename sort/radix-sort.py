@@ -54,8 +54,21 @@ tests.append(
 """
 Radix sort sorts on the least significant digit first with another stable sort
 ex: sort dates by three keys: dates, month, then year
-insertion sort, merge sort and counting sort are stable; heapsort and quicksort are not
-running time: theta(d(k+n))
+insertion sort, merge sort & counting sort are stable; heapsort & quicksort are not
+
+Say we want to sort n integers, size M, base r, number iterations in radix sort:
+d = log_r(M) + 1. We put n items into r buckets, so running time is O(d(n+r)) =
+O((log_r(M) + 1).(n+r))
+
+Pick base: should choose r = n, running time: O(2n.(log_r(M) + 1))
+
+Running time also depends on size M:
+1. if M <= n^c, running time: O(n)
+2. if M = 2^n, running time: O(\frac{n^2}{logn})
+
+=> Radix sort can sort n integers of size at most n^100 in time O(n), but needs
+enough space to store O(n) integers. However, we should avoid case that size much
+bigger than n like 2^n
 """
 
 
