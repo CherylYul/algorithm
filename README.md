@@ -2,15 +2,21 @@ My coding exercise when studying algorithms, data structures, and solving other 
 
 ### **Sorting**
 
+Comparison-based sorting: these models must take at least Ω(nlogn) steps
+
 - [x] Bubble sort
 - [x] Selection sort
 - [x] Insertion sort
 - [x] Merge sort
 - [x] Quick sort
 - [x] Heap sort
+
+Linear-time sorting:
+
 - [x] Counting sort
 - [x] Radix sort
 - [x] Bucket sort
+- [x] Linear select ()
 
 ### **Divdide and Conquer**
 
@@ -23,10 +29,7 @@ My coding exercise when studying algorithms, data structures, and solving other 
 
 ### **Data Structures**
 
-- [ ] Heap
 - [ ] Hash tables
 - [ ] Binary search trees
 - [ ] Red-black trees
 - [ ] B-tree
-- [ ] Linked lists
-- [ ] Stacks and queues
