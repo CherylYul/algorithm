@@ -16,7 +16,7 @@ Linear-time sorting:
 - [x] Counting sort
 - [x] Radix sort
 - [x] Bucket sort
-- [x] Linear select ()
+- [x] Linear select
 
 ### **Divdide and Conquer**
 
@@ -29,7 +29,8 @@ Linear-time sorting:
 
 ### **Data Structures**
 
-- [ ] Hash tables
-- [ ] Binary search trees
+- [x] Heap
+- [x] Binary search trees
+- [x] Hash tables
 - [ ] Red-black trees
 - [ ] B-tree
