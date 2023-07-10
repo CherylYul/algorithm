@@ -32,5 +32,5 @@ Linear-time sorting:
 - [x] Heap
 - [x] Binary search trees
 - [x] Hash tables
-- [ ] Red-black trees
+- [x] Red-black trees
 - [ ] B-tree
