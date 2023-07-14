@@ -244,6 +244,18 @@ class BST:
         print(space * depth, node.key)
         self.display_tree(node.right, space, depth + 1)
 
+    """
+    Calculate height:
+    2^0 + 2^1 + 2^2 +…+ 2^(k-1) = N
+    2^0 + 2^0 + 2^1 + 2^2 +…+ 2^(k-1) = N + 1
+    2^1 + 2^1 + 2^2 +…+ 2^(k-1) = N + 1
+    2^2 + 2^2 +…+ 2^(k-1) = N + 1
+    …
+    2^(k-1) + 2^(k-1)  = N + 1
+    2^k = N + 1
+    k = log(N+1) approximately less than log(N) + 1
+    """
+
     def depth(self, node):
         if not node:
             return 0
