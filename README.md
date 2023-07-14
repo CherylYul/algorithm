@@ -1,4 +1,6 @@
-My coding exercise when studying algorithms, data structures, and solving other things
+My coding exercise when studying algorithms, data structures, solving games and puzzles.
+
+## **Algorithms**
 
 ### **Sorting**
 
@@ -27,10 +29,29 @@ Linear-time sorting:
 - [ ] (closest-pair)
 - [x] An algorithm with faster running time comparing to normal matrix multiplication we take from linear algebra course (strassen-matrix-multiplication)
 
-### **Data Structures**
+### **Backtracking**
 
-- [x] Heap
+- [ ] N-Queens
+- [ ] Knapsack
+- [ ] Maze
+- [ ] Color graph
+
+## **Data Structures**
+
+### **Trees**
+
 - [x] Binary search trees
-- [x] Hash tables
 - [x] Red-black trees
 - [ ] B-tree
+- [x] Heap
+- [x] Hash tables
+
+### **Graphs**
+
+- [x] Undirected and directed graph class (graph_hash.py vs graph_linked_list.py)
+- [x] DFS and typological sorting - Sort clothing when getting dressed or scheduling classes' order based on its prequeresite (graph_hash.py vs graph_linked_list.py)
+- [x] DFS and simple path - How many ways get to B from A? (graph_hash.py vs graph_linked_list.py)
+- [x] DFS and strongly connected components (graph_hash.py vs graph_linked_list.py)
+- [x] BFS and shortest path - Find a Bacon number, which is the number of degrees of separation from an actor to Kevin Bacon (graph_hash.py vs graph_linked_list.py)
+- [x] BFS and bipartiteness testing - Seperate objects into two so that it will not conflict with the other (graph_hash.py vs graph_linked_list.py)
+
