@@ -1,17 +1,10 @@
-"""
-single-source shortest paths problem:
-- single-destination shortest-paths: Find a shortest path to a given destination
-vertex t from each vertex v. By reversing the direction of each edge in the graph,
-we can reduce this problem to a single-source problem.
-- single-pair shortest-path: Find a shortest path from u to v for given vertices
-u and v. If we solve the single-source problem with source vertex u, we solve this
-problem also. Moreover, all known algorithms for this problem have the same worst-case
-asymptotic running time as the best single-source algorithms.
-- all-pairs shortest-paths: Find a shortest path from u to v for every pair of vertices
-u and v. Although we can solve this problem by running a single-source algorithm once
-from each vertex, we usually can solve it faster. Additionally, its structure is 
-interesting in its own right. Chapter 25 addresses the all-pairs problem in detail.
-"""
+from random import random
+from random import choice
+import heapdict as heapdict
+import time
+import matplotlib
+import numpy as np
+import matplotlib.pyplot as plt
 
 class Vertex:
     def __init__(self, vertex):
@@ -201,6 +194,22 @@ class Graph:
                 self.relax(v, nb, w)
         print(self.get_distance())
 
+    def Disjkstra_heap(self, s):
+        self.initialize_single_source(s)
+        Q = heapdict.heapdict()
+        for v in self.vertices:
+            Q[v] = v.distance
+        while Q:
+            v, pos = Q.popitem()
+            if v.distance == float("inf"):
+                return
+            for nb, w in list(zip(v.outNeighbors, v.outWeight)):
+                if v.distance + w < nb.distance:
+                    nb.distance = v.distance + w
+                    nb.predecessor = v
+                    Q[nb] = v.distance + w #update the key in heapdict
+        print(self.get_distance())
+
     def __repr__(self):
         s = "Vertices: "
         for v in self.vertices:
@@ -249,6 +258,51 @@ tests.append({
     "DAG": False,
     "negative": False
 })
+
+# n vertices with p probability and set of weights
+def random_graph(n, p, weights = [1]):
+    G = Graph()
+    V = [Vertex(x) for x in range(n)]
+    for v in V:
+        G.add_vertex(v)
+    for v1 in V:
+        for v2 in V:
+            if v1 != v2:
+                if random() < p:
+                    G.add_directed_edge(v1, v2, w = choice(weights))
+    return G
+
+def run_trials(fn, n_vertices, p, numTrials=25):
+    nValues = []
+    tValues = []
+    for n in n_vertices:
+        # run fn several times and average to get a decent idea.
+        runtime = 0
+        for t in range(numTrials):
+            G = random_graph(n, p)  # Random graph on n vertices with p
+            start = time.time()
+            if fn == "dijkstra_array":
+                G.Dijkstra(G.vertices[0])
+            if fn == "dijkstrac_heap":
+                G.Disjkstra_heap(G.vertices[0])
+            end = time.time()
+            runtime += (end - start) * 1000 # measure in milliseconds
+        runtime = runtime/numTrials
+        nValues.append(n)
+        tValues.append(runtime)
+    return nValues, tValues
+
+def test_plot():
+    n_vertices = [10, 50, 100, 150, 200, 300]
+    nDijkstraArray, tDijkstraArray = run_trials("dijkstra_array", n_vertices, 0.2)
+    nDijkstraHeap, tDijkstraHeap = run_trials("dijkstra_heap", n_vertices, 0.2)
+    plt.plot(nDijkstraArray, tDijkstraArray, "-.", color="blue", label="Dijkstra with an array")
+    plt.plot(nDijkstraHeap, tDijkstraHeap, "--", color="orange", label="Dijkstra with a heap")
+    plt.xlabel("n")
+    plt.ylabel("Time(ms)")
+    plt.legend()
+    plt.title("Shortest paths on a graph with n vertices and about 5n edges")
+    plt.show()
 
 def simple_test():
     for test in tests:
