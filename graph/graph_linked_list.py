@@ -429,7 +429,7 @@ def simple_test():
         print("Test 2: DFS discovery and finishing time: ")
         G.DFS(True)
 
-        print("Test 3: DFS - TopoSort for directer graph: ")
+        print("Test 3: DFS - TopoSort for directed graph: ")
         if test["directed"]:
             G.topo_sort()
 
