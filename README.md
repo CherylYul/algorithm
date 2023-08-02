@@ -51,7 +51,7 @@ Linear-time sorting:
 - [x] Undirected and directed graph class (graph_hash.py vs graph_linked_list.py)
 - [x] DFS and typological sorting - Sort clothing when getting dressed or scheduling classes' order based on its prequeresite (graph_hash.py vs graph_linked_list.py)
 - [x] DFS and simple path - How many ways get to B from A? (graph_hash.py vs graph_linked_list.py)
-- [x] DFS and strongly connected components (graph_hash.py vs graph_linked_list.py)
+- [x] DFS and strongly connected components - Used in detecting network failure, data visualization and clustering (graph_hash.py vs graph_linked_list.py)
 - [x] BFS and shortest path - Find a Bacon number, which is the number of degrees of separation from an actor to Kevin Bacon (graph_hash.py vs graph_linked_list.py)
 - [x] BFS and bipartiteness testing - Seperate objects into two so that it will not conflict with the other (graph_hash.py vs graph_linked_list.py)
 - [x] Dijkstra's - Find the shortest path in non-negative weighted graph (graph_weight.py)
