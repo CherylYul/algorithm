@@ -227,6 +227,45 @@ class Graph:
         print(self.get_distance())
 
     """
+    Slow all pairs shortest paths are based on the similarities of matrix in graph
+    and matrix multiplication in dynamic programming:
+    - Slow all pairs shortest paths: O(V^4) times
+    - Faster all pairs shortest paths: take advantages of positive graph O(V^3logV)
+    """
+
+    def faster_all_pairs_shortest_paths(self):
+        W = self.get_weight_matrix()
+        L = [W]
+        n = len(self.vertices)
+        i = 1
+        while i < n - 1:
+            L.append(self.extend_shortest_paths(W, L[-1]))
+            i *= 2
+        return L[-1]
+
+    def slow_all_pairs_shortest_paths(self):
+        W = self.get_weight_matrix()
+        L = [W]
+        n = len(self.vertices)
+        for _ in range(1, n - 1):
+            L.append(self.extend_shortest_paths(W, L[-1]))
+        return L[-1]
+
+    def extend_shortest_paths(self, W, L):
+        n = len(self.vertices)
+        L_next = [[L[r][c] for c in range(n)] for r in range(n)]
+        for r in range(n):
+            for c in range(n):
+                if r != c:
+                    for k in range(n):
+                        compare = L_next[r][c]
+                        if not compare:
+                            compare = float("inf")
+                        if W[k][c] and L[r][k]:
+                            L_next[r][c] = min(compare, L[r][k] + W[k][c])
+        return L_next
+
+    """
     We can find all pairs shortest-paths by running a single-source shortest-paths
     algorithm |V| times, once for each vertex.
     - Using Disjktra with min heap priority, total running time is O(V^3 + VE)
@@ -348,6 +387,37 @@ tests.append(
     }
 )
 
+tests.append(
+    {
+        "graph": 3,
+        "vertices": [1, 2, 3, 4, 5],
+        "edges": [
+            (1, 2, 3),
+            (1, 3, 8),
+            (1, 5, -4),
+            (2, 4, 1),
+            (2, 5, 7),
+            (3, 2, 4),
+            (4, 1, 2),
+            (4, 3, -5),
+            (5, 4, 6),
+        ],
+        "index": [
+            (0, 1, 3),
+            (0, 2, 8),
+            (0, 4, -4),
+            (1, 3, 1),
+            (1, 4, 7),
+            (2, 1, 4),
+            (3, 0, 2),
+            (3, 2, -5),
+            (4, 3, 6),
+        ],
+        "DAG": False,
+        "negative": True,
+    }
+)
+
 
 # n vertices with p probability and set of weights
 def random_graph(n, p, weights=[1]):
@@ -429,8 +499,14 @@ def simple_test():
         if not test["negative"]:
             G.Dijkstra(G.vertices[0])
 
+        print("Test 5: Matrix Weight")
+        print(G.get_weight_matrix())
 
-# simple_test()
+        print("Test 6: Slow All Pairs Shortest Paths")
+        result = G.slow_all_pairs_shortest_paths()
+        for i in result:
+            print(i)
+
+
+simple_test()
 # python3 graph/graph_weight.py
-a = ["h", "j", "k"]
-print(a.index("k"))
