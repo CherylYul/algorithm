@@ -6,6 +6,7 @@ import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 class Vertex:
     def __init__(self, vertex):
         self.value = vertex
@@ -55,16 +56,16 @@ class Vertex:
 
     def has_weight(self, w):
         return self.has_out_weight(w) or self.has_in_weight(w)
-    
+
     def get_out_weight(self):
         return self.outWeight
-    
+
     def get_in_weight(self):
         return self.inWeight
 
     def add_out_weight(self, w):
         self.outWeight.append(w)
-    
+
     def add_in_weight(self, w):
         self.inWeight.append(w)
 
@@ -74,8 +75,9 @@ class Vertex:
     def __str__(self):
         return self.__repr__()
 
+
 class Graph:
-    def __init__(self, directed = True):
+    def __init__(self, directed=True):
         self.vertices = []
         self.directed = directed
         self.topo = []
@@ -100,6 +102,17 @@ class Graph:
                 edges.append((v, nb, w))
         return edges
 
+    def get_weight_matrix(self):
+        n = len(self.vertices)
+        W = [[None for _ in range(n)] for _ in range(n)]
+        for i in range(n):
+            v = self.vertices[i]
+            W[i][i] = 0
+            for nb, w in list(zip(v.outNeighbors, v.outWeight)):
+                j = self.vertices.index(nb)
+                W[i][j] = w
+        return W
+
     """
     Bellman-Ford algorithm: solves the single-source shortest-paths problem in the
     general case in which edges can have negative weight O(VE)
@@ -107,23 +120,24 @@ class Graph:
     - Returns false if it doesn't have a negative-weight cycle, then produces shortest
     paths and their weights
     """
-    def initialize_single_source(self, s): # O(V)
+
+    def initialize_single_source(self, s):  # O(V)
         for v in self.vertices:
             v.distance = float("inf")
             v.predecessor = None
         s.distance = 0
-    
+
     def relax(self, v1, v2, w):
         if v2.distance > v1.distance + w:
             v2.distance = v1.distance + w
             v2.predecessor = v1
-    
+
     def get_distance(self):
         s = ""
         for v in self.vertices:
             s += "{}: {}, ".format(v, v.distance)
         return s
-    
+
     def Bellman_Ford(self, s):
         self.initialize_single_source(s)
         # relaxing each edge of the graph once
@@ -138,7 +152,7 @@ class Graph:
                 if nb.distance > v.distance + w:
                     return False
         return True
-    
+
     """
     Single-source shortest paths in directed acyclic graphs: topologically sorting
     the dag to impose a linear ordering on the vertices.
@@ -149,6 +163,7 @@ class Graph:
     perform any sequence of job, so critical path can be seen at total time to perform
     the job
     """
+
     def topo_sort(self):
         for v in self.vertices:
             v.status = "unvisited"
@@ -156,14 +171,14 @@ class Graph:
             if v.status == "unvisited":
                 self.internal_topo_sort(v)
         return self.topo
-    
+
     def internal_topo_sort(self, v):
         v.status = "visited"
         for nb in v.outNeighbors:
             if nb.status == "unvisited":
                 self.internal_topo_sort(nb)
         self.topo.insert(0, v)
-    
+
     def DAG_shortest_paths(self, s):
         self.initialize_single_source(s)
         for v in self.topo:
@@ -177,6 +192,7 @@ class Graph:
     Dense: O(V^2 + E) = O(V^2)
     Sparse: O((V+E).logV) = O(ElogV)
     """
+
     def extract_min(self, Q):
         min, pos = Q[0], 0
         for i in range(1, len(Q)):
@@ -207,60 +223,134 @@ class Graph:
                 if v.distance + w < nb.distance:
                     nb.distance = v.distance + w
                     nb.predecessor = v
-                    Q[nb] = v.distance + w #update the key in heapdict
+                    Q[nb] = v.distance + w  # update the key in heapdict
         print(self.get_distance())
+
+    """
+    We can find all pairs shortest-paths by running a single-source shortest-paths
+    algorithm |V| times, once for each vertex.
+    - Using Disjktra with min heap priority, total running time is O(V^3 + VE)
+    - Using Bellman Ford, total running time is O(V^2E), dense graph is O(V^4)
+    """
 
     def __repr__(self):
         s = "Vertices: "
         for v in self.vertices:
-            s += str(v) + ", " 
+            s += str(v) + ", "
         s += "\n"
         s += "Directed: " + str(self.directed) + "\n"
         s += "Edges and Weight: "
         for v1, v2, w in self.get_edge():
             s += "({}, {}, {}), ".format(v1, v2, w)
         return s
-    
+
     def __str__(self):
         return self.__repr__()
 
 
 tests = []
-tests.append({
-    "graph": 0,
-    "vertices": ["s", "t", "x", "y", "z"],
-    "edges": [("s", "t", 6), ("s", "y", 7), ("t", "x", 5), ("t", "y", 8), ("t", "z", -4), 
-              ("x", "t", -2), ("y", "x", -3), ("y", "z", 9), ("z", "s", 2), ("z", "x", 7)],
-    "index": [(0, 1, 6), (0, 3, 7), (1, 2, 5), (1, 3, 8), (1, 4, -4), 
-              (2, 1, -2), (3, 2, -3), (3, 4, 9), (4, 0, 2), (4, 2, 7)],
-    "DAG": False,
-    "negative": True
-})
+tests.append(
+    {
+        "graph": 0,
+        "vertices": ["s", "t", "x", "y", "z"],
+        "edges": [
+            ("s", "t", 6),
+            ("s", "y", 7),
+            ("t", "x", 5),
+            ("t", "y", 8),
+            ("t", "z", -4),
+            ("x", "t", -2),
+            ("y", "x", -3),
+            ("y", "z", 9),
+            ("z", "s", 2),
+            ("z", "x", 7),
+        ],
+        "index": [
+            (0, 1, 6),
+            (0, 3, 7),
+            (1, 2, 5),
+            (1, 3, 8),
+            (1, 4, -4),
+            (2, 1, -2),
+            (3, 2, -3),
+            (3, 4, 9),
+            (4, 0, 2),
+            (4, 2, 7),
+        ],
+        "DAG": False,
+        "negative": True,
+    }
+)
 
-tests.append({
-    "graph": 1,
-    "vertices": ["r", "s", "t", "x", "y", "z"],
-    "edges": [("r", "s", 5), ("r", "t", 3), ("s", "t", 2), ("s", "x", 6), ("t", "x", 7), 
-              ("t", "y", 4), ("t", "z", 2), ("x", "y", -1), ("x", "z", 1), ("y", "z", -2)],
-    "index": [(0, 1, 5), (0, 2, 3), (1, 2, 2), (1, 3, 6), (2, 3, 7), 
-              (2, 4, 4), (2, 5, 2), (3, 4, -1), (3, 5, 1), (4, 5, -2)],
-    "DAG": True,
-    "negative": True
-})
+tests.append(
+    {
+        "graph": 1,
+        "vertices": ["r", "s", "t", "x", "y", "z"],
+        "edges": [
+            ("r", "s", 5),
+            ("r", "t", 3),
+            ("s", "t", 2),
+            ("s", "x", 6),
+            ("t", "x", 7),
+            ("t", "y", 4),
+            ("t", "z", 2),
+            ("x", "y", -1),
+            ("x", "z", 1),
+            ("y", "z", -2),
+        ],
+        "index": [
+            (0, 1, 5),
+            (0, 2, 3),
+            (1, 2, 2),
+            (1, 3, 6),
+            (2, 3, 7),
+            (2, 4, 4),
+            (2, 5, 2),
+            (3, 4, -1),
+            (3, 5, 1),
+            (4, 5, -2),
+        ],
+        "DAG": True,
+        "negative": True,
+    }
+)
 
-tests.append({
-    "graph": 2,
-    "vertices": ["s", "t", "x", "y", "z"],
-    "edges": [("s", "t", 10), ("s", "y", 5), ("t", "x", 1), ("t", "y", 2), ("x", "z", 4), 
-              ("y", "t", 3), ("y", "x", 9), ("y", "z", 2), ("z", "s", 7), ("z", "x", 6)],
-    "index": [(0, 1, 10), (0, 3, 5), (1, 2, 1), (1, 3, 2), (2, 4, 4), 
-              (3, 1, 3), (3, 2, 9), (3, 4, 2), (4, 0, 7), (4, 2, 6)],
-    "DAG": False,
-    "negative": False
-})
+tests.append(
+    {
+        "graph": 2,
+        "vertices": ["s", "t", "x", "y", "z"],
+        "edges": [
+            ("s", "t", 10),
+            ("s", "y", 5),
+            ("t", "x", 1),
+            ("t", "y", 2),
+            ("x", "z", 4),
+            ("y", "t", 3),
+            ("y", "x", 9),
+            ("y", "z", 2),
+            ("z", "s", 7),
+            ("z", "x", 6),
+        ],
+        "index": [
+            (0, 1, 10),
+            (0, 3, 5),
+            (1, 2, 1),
+            (1, 3, 2),
+            (2, 4, 4),
+            (3, 1, 3),
+            (3, 2, 9),
+            (3, 4, 2),
+            (4, 0, 7),
+            (4, 2, 6),
+        ],
+        "DAG": False,
+        "negative": False,
+    }
+)
+
 
 # n vertices with p probability and set of weights
-def random_graph(n, p, weights = [1]):
+def random_graph(n, p, weights=[1]):
     G = Graph()
     V = [Vertex(x) for x in range(n)]
     for v in V:
@@ -269,8 +359,9 @@ def random_graph(n, p, weights = [1]):
         for v2 in V:
             if v1 != v2:
                 if random() < p:
-                    G.add_directed_edge(v1, v2, w = choice(weights))
+                    G.add_directed_edge(v1, v2, w=choice(weights))
     return G
+
 
 def run_trials(fn, n_vertices, p, numTrials=25):
     nValues = []
@@ -286,23 +377,33 @@ def run_trials(fn, n_vertices, p, numTrials=25):
             if fn == "dijkstrac_heap":
                 G.Disjkstra_heap(G.vertices[0])
             end = time.time()
-            runtime += (end - start) * 1000 # measure in milliseconds
-        runtime = runtime/numTrials
+            runtime += (end - start) * 1000  # measure in milliseconds
+        runtime = runtime / numTrials
         nValues.append(n)
         tValues.append(runtime)
     return nValues, tValues
+
 
 def test_plot():
     n_vertices = [10, 50, 100, 150, 200, 300]
     nDijkstraArray, tDijkstraArray = run_trials("dijkstra_array", n_vertices, 0.2)
     nDijkstraHeap, tDijkstraHeap = run_trials("dijkstra_heap", n_vertices, 0.2)
-    plt.plot(nDijkstraArray, tDijkstraArray, "-.", color="blue", label="Dijkstra with an array")
-    plt.plot(nDijkstraHeap, tDijkstraHeap, "--", color="orange", label="Dijkstra with a heap")
+    plt.plot(
+        nDijkstraArray,
+        tDijkstraArray,
+        "-.",
+        color="blue",
+        label="Dijkstra with an array",
+    )
+    plt.plot(
+        nDijkstraHeap, tDijkstraHeap, "--", color="orange", label="Dijkstra with a heap"
+    )
     plt.xlabel("n")
     plt.ylabel("Time(ms)")
     plt.legend()
     plt.title("Shortest paths on a graph with n vertices and about 5n edges")
     plt.show()
+
 
 def simple_test():
     for test in tests:
@@ -318,15 +419,18 @@ def simple_test():
         print("Test 2: Bellman Ford")
         if G.Bellman_Ford(G.vertices[0]):
             print("There is no negative weight cycle")
-        
+
         print("Test 3: Single-source Shortest-paths for DAG based on Topo")
         if test["DAG"]:
             print("Topo: ", G.topo_sort())
             G.DAG_shortest_paths(G.vertices[1])
-        
+
         print("Test 4: Dijkstra's algorithm")
         if not test["negative"]:
             G.Dijkstra(G.vertices[0])
 
-simple_test()
-#python3 graph/graph_weight.py
+
+# simple_test()
+# python3 graph/graph_weight.py
+a = ["h", "j", "k"]
+print(a.index("k"))
