@@ -15,6 +15,8 @@ class Vertex:
         self.inWeight = []
         self.outWeight = []
 
+        self.reWeight = []
+        self.preDistance = None
         self.distance = None
         self.predecessor = None
         self.status = None
@@ -226,8 +228,24 @@ class Graph:
                     Q[nb] = v.distance + w  # update the key in heapdict
         print(self.get_distance())
 
+    def Disjkstra_heap_reweight(self, s):
+        self.initialize_single_source(s)
+        Q = heapdict.heapdict()
+        for v in self.vertices:
+            Q[v] = v.distance
+        while Q:
+            v, pos = Q.popitem()
+            if v.distance == float("inf"):
+                return
+            for nb, w in list(zip(v.outNeighbors, v.reWeight)):
+                if v.distance + w < nb.distance:
+                    nb.distance = v.distance + w
+                    nb.predecessor = v
+                    Q[nb] = v.distance + w  # update the key in heapdict
+        print(self.get_distance())
+
     """
-    Slow all pairs shortest paths are based on the similarities of matrix in graph
+    All pairs shortest paths (APSP) are based on the similarities of matrix in graph
     and matrix multiplication in dynamic programming:
     - Slow all pairs shortest paths: O(V^4) times
     - Faster all pairs shortest paths: take advantages of positive graph O(V^3logV)
@@ -266,11 +284,84 @@ class Graph:
         return L_next
 
     """
-    We can find all pairs shortest-paths by running a single-source shortest-paths
-    algorithm |V| times, once for each vertex.
-    - Using Disjktra with min heap priority, total running time is O(V^3 + VE)
-    - Using Bellman Ford, total running time is O(V^2E), dense graph is O(V^4)
+    Floyd-Warshall algorithm O(V^3): APSP
     """
+
+    def FLOYD_WARSHALL(self):
+        D = [self.get_weight_matrix()]
+        n = len(self.vertices)
+        for k in range(n):
+            # D.append(D[-1])
+            D_next = [[D[-1][r][c] for c in range(n)] for r in range(n)]
+            D.append(D_next)
+            for i in range(n):
+                for j in range(n):
+                    if i != j:
+                        compare = D[k][i][j]
+                        if not D[k][i][j]:
+                            compare = float("inf")
+                        if D[k][i][k] and D[k][k][j]:
+                            D[k + 1][i][j] = min(compare, D[k][i][k] + D[k][k][j])
+        return D[-1]
+
+    """
+    Transitive closure: check if there is a path from vertex i to j in the graph, 
+    then construct a reach-ability matrix O(V^3)
+    """
+
+    def transitive_closure(self):
+        n = len(self.vertices)
+        t = [[0 for _ in range(n)] for _ in range(n)]
+        for i in range(n):
+            for j in range(n):
+                if i == j or (self.vertices[j] in self.vertices[i].outNeighbors):
+                    t[i][j] = 1
+        T = [t]
+        for k in range(n):
+            t = [[T[-1][r][c] for c in range(n)] for r in range(n)]
+            for i in range(n):
+                for j in range(n):
+                    t[i][j] = 1 if (t[i][j] or (t[i][k] and t[k][j])) else 0
+            T.append(t)
+        return T
+
+    """
+    Johnson's algorithm (APSP) O(V^2logV + VE), which is faster than Floyd Warshall
+    - Returns a matrix of shortest path weights for all pairs of vertices
+    - Reports if the input graph contains a negative cycles
+    
+    1. Add a new single source, then find the shortest path by Bellman Ford, the shortest
+    path to any source must be equal or smaller than 0
+    2. Reweighting the graph so that there is no negative edges: 
+        new_edge = old_edge + tail_shortest_path - head_shortest_path
+    3. Compute all the shortest path using Disjkstra
+    4. Return the shortest path matrix:
+        shortest_path = shortest_path_Disjkstra - tail_shortest_path + head_shortest_path
+    """
+
+    def Johnson(self):
+        self.vertices.append(Vertex("source"))
+        n = len(self.vertices)
+        source = self.vertices[n - 1]
+        for i in range(n - 1):
+            self.add_directed_edge(source, self.vertices[i], 0)
+        if not self.Bellman_Ford(source):
+            print("The graph contains a negative weight cycles!")
+        else:
+            self.vertices.pop()
+            for v in self.vertices:
+                v.preDistance = v.distance
+                for nb, w in list(zip(v.outNeighbors, v.outWeight)):
+                    v.reWeight.append(w + v.distance - nb.distance)
+                print(v.reWeight)
+            D = []
+            for v in self.vertices:
+                self.Disjkstra_heap_reweight(v)
+                D_next = []
+                for u in self.vertices:
+                    D_next.append(u.distance - v.preDistance + u.preDistance)
+                D.append(D_next)
+            return D
 
     def __repr__(self):
         s = "Vertices: "
@@ -418,6 +509,48 @@ tests.append(
     }
 )
 
+tests.append(
+    {
+        "graph": 4,
+        "vertices": [0, 1, 2, 3],
+        "edges": [(1, 2), (1, 3), (2, 1), (3, 0), (3, 2)],
+        "index": [(1, 2), (1, 3), (2, 1), (3, 0), (3, 2)],
+        "DAG": False,
+        "negative": False,
+    }
+)
+
+tests.append(
+    {
+        "graph": 5,
+        "vertices": [1, 2, 3, 4, 5],
+        "edges": [
+            (1, 2, 3),
+            (1, 3, 8),
+            (1, 5, -4),
+            (2, 4, 1),
+            (2, 5, 7),
+            (3, 2, 4),
+            (4, 1, 2),
+            (4, 3, -5),
+            (5, 4, 6),
+        ],
+        "index": [
+            (0, 1, 3),
+            (0, 2, 8),
+            (0, 4, -4),
+            (1, 3, 1),
+            (1, 4, 7),
+            (2, 1, 4),
+            (3, 0, 2),
+            (3, 2, -5),
+            (4, 3, 6),
+        ],
+        "DAG": False,
+        "negative": False,
+    }
+)
+
 
 # n vertices with p probability and set of weights
 def random_graph(n, p, weights=[1]):
@@ -477,36 +610,63 @@ def test_plot():
 
 def simple_test():
     for test in tests:
-        print("===============Testing Graph {} ===============".format(test["graph"]))
-        print("Test 1: Graph Representation")
-        G = Graph()
-        for v in test["vertices"]:
-            G.add_vertex(Vertex(v))
-        for v1, v2, w in test["index"]:
-            G.add_directed_edge(G.vertices[v1], G.vertices[v2], w)
-        print(G)
+        if test["graph"] != 4:
+            print(
+                "===============Testing Graph {} ===============".format(test["graph"])
+            )
+            print("Test 1: Graph Representation")
+            G = Graph()
+            for v in test["vertices"]:
+                G.add_vertex(Vertex(v))
+            for v1, v2, w in test["index"]:
+                G.add_directed_edge(G.vertices[v1], G.vertices[v2], w)
+            print(G)
 
-        print("Test 2: Bellman Ford")
-        if G.Bellman_Ford(G.vertices[0]):
-            print("There is no negative weight cycle")
+            print("Test 2: Bellman Ford")
+            if G.Bellman_Ford(G.vertices[0]):
+                print("There is no negative weight cycle")
 
-        print("Test 3: Single-source Shortest-paths for DAG based on Topo")
-        if test["DAG"]:
-            print("Topo: ", G.topo_sort())
-            G.DAG_shortest_paths(G.vertices[1])
+            print("Test 3: Single-source Shortest-paths for DAG based on Topo")
+            if test["DAG"]:
+                print("Topo: ", G.topo_sort())
+                G.DAG_shortest_paths(G.vertices[1])
 
-        print("Test 4: Dijkstra's algorithm")
-        if not test["negative"]:
-            G.Dijkstra(G.vertices[0])
+            print("Test 4: Dijkstra's algorithm")
+            if not test["negative"]:
+                G.Dijkstra(G.vertices[0])
 
-        print("Test 5: Matrix Weight")
-        print(G.get_weight_matrix())
+            print("Test 5: Matrix Weight")
+            print(G.get_weight_matrix())
 
-        print("Test 6: Slow All Pairs Shortest Paths")
-        result = G.slow_all_pairs_shortest_paths()
-        for i in result:
-            print(i)
+            print("Test 6: Slow All Pairs Shortest Paths")
+            result = G.slow_all_pairs_shortest_paths()
+            for i in result:
+                print(i)
+
+            print("Test 7: APSP Floyd Warshall")
+            result = G.FLOYD_WARSHALL()
+            for i in result:
+                print(i)
+
+            print("Test 8: Johnson")
+            if test["negative"]:
+                print(G.Johnson())
+
+
+def transitive_closure():
+    G = Graph()
+    for v in tests[4]["vertices"]:
+        G.add_vertex(Vertex(v))
+    for (
+        v1,
+        v2,
+    ) in tests[
+        4
+    ]["index"]:
+        G.add_directed_edge(G.vertices[v1], G.vertices[v2])
+    print(G.transitive_closure())
 
 
 simple_test()
+# transitive_closure()
 # python3 graph/graph_weight.py
