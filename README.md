@@ -36,6 +36,13 @@ Linear-time sorting:
 - [ ] Maze
 - [ ] Color graph
 
+### **Dynamic Programming**
+
+- [ ] Cut Rod
+- [ ] Fibonacci
+- [ ] Knapsack
+- [ ] Longest common sequence
+
 ## **Data Structures**
 
 ### **Trees**
@@ -57,3 +64,6 @@ Linear-time sorting:
 - [x] Dijkstra's - Find the shortest path in non-negative weighted graph (graph_weight.py)
 - [x] Bellman Ford - Find the shortest path in graph which has negative weights (graph_weight.py)
 - [x] DAG shortest paths - An algorithm of PERT application, which helps arrange and performs tasks more efficiently (graph_weighted.py)
+- [x] Floyd Warshall - Find all pairs shortest path (graph_weighted.py)
+- [x] Johnson - Find all pairs shortest path (graph_weighted.py)
+- [x] Transitive Closure - Check if there is a path from one destination to another detination (graph_weighted.py)
