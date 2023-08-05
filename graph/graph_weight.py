@@ -245,13 +245,28 @@ class Graph:
         print(self.get_distance())
 
     """
-    All pairs shortest paths (APSP) are based on the similarities of matrix in graph
-    and matrix multiplication in dynamic programming:
-    - Slow all pairs shortest paths: O(V^4) times
-    - Faster all pairs shortest paths: take advantages of positive graph O(V^3logV)
+    All-Pairs shortest paths (APSP) are all the shortest paths from u to v for all
+    pairs u, v of vertices in the graph. Method:
+    
+    1. Naive solution: run Bellman-Ford for all sources, running time O(V^2E)
+    2. Slow APSP: solve small problems until the real problem (bottom up of dynamic
+    programming), O(V^4)
+    3. Floyd Warshall: faster of dynamic programming, O(V^3)
+    4. Johnson:  O(V^2logV + VE)
+
+    * If E = V^2: Naive solution = slow APSP, Floyd Warshal faster than Johnson
+    * If V is large: Johnson is better than Floyd Warshall
     """
 
-    def faster_all_pairs_shortest_paths(self):
+    def slow_APSP(self):
+        W = self.get_weight_matrix()
+        L = [W]
+        n = len(self.vertices)
+        for _ in range(1, n - 1):
+            L.append(self.extend_shortest_paths(W, L[-1]))
+        return L[-1]
+
+    def faster_APSP(self):
         W = self.get_weight_matrix()
         L = [W]
         n = len(self.vertices)
@@ -259,14 +274,6 @@ class Graph:
         while i < n - 1:
             L.append(self.extend_shortest_paths(W, L[-1]))
             i *= 2
-        return L[-1]
-
-    def slow_all_pairs_shortest_paths(self):
-        W = self.get_weight_matrix()
-        L = [W]
-        n = len(self.vertices)
-        for _ in range(1, n - 1):
-            L.append(self.extend_shortest_paths(W, L[-1]))
         return L[-1]
 
     def extend_shortest_paths(self, W, L):
@@ -283,11 +290,7 @@ class Graph:
                             L_next[r][c] = min(compare, L[r][k] + W[k][c])
         return L_next
 
-    """
-    Floyd-Warshall algorithm O(V^3): APSP
-    """
-
-    def FLOYD_WARSHALL(self):
+    def Floyd_Warshall(self):
         D = [self.get_weight_matrix()]
         n = len(self.vertices)
         for k in range(n):
@@ -639,12 +642,12 @@ def simple_test():
             print(G.get_weight_matrix())
 
             print("Test 6: Slow All Pairs Shortest Paths")
-            result = G.slow_all_pairs_shortest_paths()
+            result = G.slow_APSP()
             for i in result:
                 print(i)
 
             print("Test 7: APSP Floyd Warshall")
-            result = G.FLOYD_WARSHALL()
+            result = G.Floyd_Warshall()
             for i in result:
                 print(i)
 
