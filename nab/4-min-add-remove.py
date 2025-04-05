@@ -4,6 +4,7 @@
 # Ex: A = [1, 1, 3, 4, 4, 4] => remove 1, remove 3, add 4 => 3 steps [1, 4, 4, 4, 4]
 # Ex: A = [1, 2, 2, 2, 5, 5, 5, 8] => remove 8, remove 2, add 5, add 5 => 4 steps [1, 2, 2, 5, 5, 5, 5, 5]
 
+# counting elements subjects
 # Đếm mỗi thành phần trong array chiếm bao nhiêu
 # Nếu số lần xuất hiện lớn hơn hoặc bằng nửa thì cần giảm số lần xuất hiện
 # Ngược lại cần tăng số lần xuất hiện
