@@ -5,7 +5,6 @@
 
 
 def solution(X, A):
-    # Implement your solution here
     n = len(A)
     num_of_leaf = 0
     leaf = [False] * (X + 1)
