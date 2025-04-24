@@ -1,17 +1,16 @@
 ## Sorting
 
-|   Algorithm    | Worst-case running time | Average-case Expected running time |
-| :------------: | :---------------------: | :--------------------------------: |
-| Insertion sort |        $Θ(n^2)$         |              $Θ(n^2)$              |
-|   Merge sort   |       $Θ(nlogn)$        |             $Θ(nlogn)$             |
-|   Heap sort    |       $O(nlogn)$        |                 -                  |
-|   Quick sort   |        $Θ(n^2)$         |             $Θ(nlogn)$             |
-| Counting sort  |        $Θ(k+n)$         |              $Θ(k+n)$              |
-|   Radix sort   |       $Θ(d(n+k))$       |            $Θ(d(n+k))$             |
-|  Bucket sort   |        $Θ(n^2)$         |               $Θ(n)$               |
-
-- Ω(nlogn) steps: bubble sort, selection sort, insertion sort, merge sort, quick sort, heap sort
-- Linear-time sorting: counting, radix sort, bucket sort, linear select
+|   Algorithm    | Worst-case running time | Average-case Expected running time |   Space   |
+| :------------: | :---------------------: | :--------------------------------: | :-------: |
+|  Bubble sort   |        $Θ(n^2)$         |              $Θ(n^2)$              |  $Θ(1)$   |
+| Insertion sort |        $Θ(n^2)$         |              $Θ(n^2)$              |  $Θ(1)$   |
+| Selection sort |        $Θ(n^2)$         |              $Θ(n^2)$              |  $Θ(1)$   |
+|   Merge sort   |       $Θ(nlogn)$        |             $Θ(nlogn)$             |  $Θ(n)$   |
+|   Quick sort   |        $Θ(n^2)$         |             $Θ(nlogn)$             | $Θ(logn)$ |
+|   Heap sort    |       $O(nlogn)$        |             $Θ(nlogn)$             |  $Θ(1)$   |
+| Counting sort  |        $Θ(k+n)$         |              $Θ(k+n)$              |  $Θ(k)$   |
+|   Radix sort   |       $Θ(d(n+k))$       |            $Θ(d(n+k))$             | $Θ(n+k)$  |
+|  Bucket sort   |        $Θ(n^2)$         |               $Θ(n)$               | $Θ(n+k)$  |
 
 ## Compare Quick sort vs Merge sort
 
