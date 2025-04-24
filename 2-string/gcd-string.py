@@ -1,9 +1,9 @@
 """
-The task requires finding the largest string x that divides both
-input strings str1 and str2. Here, "divides" means that the original string
-can be formed by repeatedly concatenating x.
-- Brute-Force Substring Check: inefficient
-- Euclidean Algorithm: a > b => gcd(a, b) = gcd(b, a % b), repeat until b = 0
+Finding the largest string x that divides both input strings str1 and str2.
+Input: str1 = "ABABAB", str2 = "ABAB" => "AB"
+Input: str1 = "ABCABC", str2 = "ABC" => "ABC"
+Solution: Euclidean Algorithm: a > b => gcd(a, b) = gcd(b, a % b),
+repeat until b = 0
 Ex: 65 vs 25 => 25 vs 15 => 15 vs 10 => 10 vs 5 => 5 vs 0
 """
 

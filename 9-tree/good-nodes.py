@@ -5,8 +5,8 @@ class TreeNode(object):
         self.right = right
 
 
-# recursion: Time O(n), Space O(h)
-class Solution1(object):
+class Solution(object):
+    # recursion: Time O(n), Space O(h)
     def goodNodes(self, root):
         def dfs(self, root, maxValue):
             if not root:
@@ -19,10 +19,8 @@ class Solution1(object):
 
         return dfs(self, root, root.val)
 
-
-# stack: Time O(n), Space O(n), only use when we check each node, and forget it right after
-class Solution2(object):
-    def goodNodes(self, root):
+    # stack: Time O(n), Space O(n), only use when we check each node, and forget it right after
+    def goodNodes2(self, root):
         if not root:
             return 0
 

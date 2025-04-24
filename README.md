@@ -1,69 +1,46 @@
-My coding exercise when studying algorithms, data structures, solving games and puzzles.
+## Sorting
 
-## **Algorithms**
+|   Algorithm    | Worst-case running time | Average-case Expected running time |
+| :------------: | :---------------------: | :--------------------------------: |
+| Insertion sort |        $Θ(n^2)$         |              $Θ(n^2)$              |
+|   Merge sort   |       $Θ(nlogn)$        |             $Θ(nlogn)$             |
+|   Heap sort    |       $O(nlogn)$        |                 -                  |
+|   Quick sort   |        $Θ(n^2)$         |             $Θ(nlogn)$             |
+| Counting sort  |        $Θ(k+n)$         |              $Θ(k+n)$              |
+|   Radix sort   |       $Θ(d(n+k))$       |            $Θ(d(n+k))$             |
+|  Bucket sort   |        $Θ(n^2)$         |               $Θ(n)$               |
 
-### **Sorting**
+- Ω(nlogn) steps: bubble sort, selection sort, insertion sort, merge sort, quick sort, heap sort
+- Linear-time sorting: counting, radix sort, bucket sort, linear select
 
-Comparison-based sorting: these models must take at least Ω(nlogn) steps
+## Compare Quick sort vs Merge sort
 
-- [x] Bubble sort
-- [x] Selection sort
-- [x] Insertion sort
-- [x] Merge sort
-- [x] Quick sort
-- [x] Heap sort
+|              |           Quick sort (random pivot)            | Merge sort (deterministic)  |
+| :----------: | :--------------------------------------------: | :-------------------------: |
+| Running time | Worst case: $O(n^2)$ <hr> Expected: $O(nlogn)$ |   Worst case: $O(nlogn)$    |
+|   In place   |                      Yes                       |             No              |
+|    Stable    |                       No                       |             Yes             |
+|     Pros     | Good cache locality if implemented for arrays  | Efficient with linked lists |
 
-Linear-time sorting:
+## Comparisons among lists
 
-- [x] Counting sort
-- [x] Radix sort
-- [x] Bucket sort
-- [x] Linear select
+|                    | unsorted, singly linked | sorted, singly linked | unsorted, doubly linked | sorted, doubly linked |
+| :----------------: | :---------------------: | :-------------------: | :---------------------: | :-------------------: |
+|   `SEARCH(L,k)`    |         linear          |        linear         |         linear          |        linear         |
+|   `INSERT(L,x)`    |        constant         |        linear         |        constant         |        linear         |
+|   `DELETE(L,x)`    |         linear          |        linear         |        constant         |       constant        |
+|  `SUCCESSOR(L,x)`  |         linear          |       constant        |         linear          |       constant        |
+| `PREDECESSOR(L,x)` |         linear          |        linear         |         linear          |       constant        |
+|   `MINIMUM(L,k)`   |         linear          |       constant        |         linear          |       constant        |
+|   `MAXIMUM(L,k)`   |         linear          |        linear         |         linear          |        linear         |
 
-### **Divdide and Conquer**
+## Comparisons among heap, list, array, and binary search tree
 
-- [x] An algorithm which is faster than the quadratic "grade school" by turning original problem into smaller problems (karatsuba-multiplication)
-- [x] Find the maximum profit of 1 time buying and selling stock, given the stock price (maximum-subarray)
-- [x] Find a lowest altitude that a ball can roll into compared to its neighbors(local-minimum)
-- [x] Measure the similarity between users about ranking favorite movies - collaborative filtering technique (counting-inversions)
-- [ ] (closest-pair)
-- [x] An algorithm with faster running time comparing to normal matrix multiplication we take from linear algebra course (strassen-matrix-multiplication)
-
-### **Backtracking**
-
-- [ ] N-Queens
-- [ ] Knapsack
-- [ ] Maze
-- [ ] Color graph
-
-### **Dynamic Programming**
-
-- [ ] Cut Rod
-- [ ] Fibonacci
-- [ ] Knapsack
-- [ ] Longest common sequence
-
-## **Data Structures**
-
-### **Trees**
-
-- [x] Binary search trees
-- [x] Red-black trees
-- [ ] B-tree
-- [x] Heap
-- [x] Hash tables
-
-### **Graphs**
-
-- [x] Undirected and directed graph class (graph_hash.py vs graph_linked_list.py)
-- [x] DFS and typological sorting - Sort clothing when getting dressed or scheduling classes' order based on its prequeresite (graph_hash.py vs graph_linked_list.py)
-- [x] DFS and simple path - How many ways get to B from A? (graph_hash.py vs graph_linked_list.py)
-- [x] DFS and strongly connected components - Used in detecting network failure, data visualization and clustering (graph_hash.py vs graph_linked_list.py)
-- [x] BFS and shortest path - Find a Bacon number, which is the number of degrees of separation from an actor to Kevin Bacon (graph_hash.py vs graph_linked_list.py)
-- [x] BFS and bipartiteness testing - Seperate objects into two so that it will not conflict with the other (graph_hash.py vs graph_linked_list.py)
-- [x] Dijkstra's - Find the shortest path in non-negative weighted graph (graph_weight.py)
-- [x] Bellman Ford - Find the shortest path in graph which has negative weights (graph_weight.py)
-- [x] DAG shortest paths - An algorithm of PERT application, which helps arrange and performs tasks more efficiently (graph_weighted.py)
-- [x] Floyd Warshall - Find all pairs shortest path (graph_weighted.py)
-- [x] Johnson - Find all pairs shortest path (graph_weighted.py)
-- [x] Transitive Closure - Check if there is a path from one destination to another detination (graph_weighted.py)
+|              Operation              |   Heap   | Linked list | Sorted array | Balanced BST |
+| :---------------------------------: | :------: | :---------: | :----------: | :----------: |
+|               Search                | Θ(logn)  |    Θ(n)     |   Θ(logn)    |   Θ(logn)    |
+|               Delete                | Θ(logn)  |    Θ(n)     |     Θ(n)     |   Θ(logn)    |
+|               Insert                | Θ(logn)  |    Θ(1)     |     Θ(n)     |   Θ(logn)    |
+|                Rank                 | Θ(nlogn) |    Θ(n)     |   Θ(logn)    |
+| Select (find 5th smallest elements) | Θ(nlogn) |    Θ(n)     |     Θ(1)     |
+|       Predecessor & Sucessor        |   Θ(1)   |    Θ(n)     |     Θ(1)     |   Θ(logn)    |

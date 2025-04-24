@@ -1,29 +1,14 @@
-"""
-Find the length of the longest substring without duplicate characters
-s = "abcabcbb" => "abc" => 3
-s = "bbbbb" => "b" => 1
-s = "pwwkew" => "wke" => 3
-Solution: sliding window + pointer
-Time complexity: O(n)
-Space complexity: O(1)
-"""
-
-"""
-You are given a string s and an integer k. You can choose any character of 
-the string and change it to any other uppercase English character. You can 
-perform this operation at most k times.
-Return the length of the longest substring containing the same letter you 
-can get after performing the above operations.
-s = "ABAB" k = 2 => "AAAA" => 4
-s = "AABABBA" k = 1 => "AAABBA" => 4
-s = "AABABBA" k = 2 => "AAAAAA" => 6
-Solution: sliding window + pointer
-Time complexity: O(n)
-Space complexity: O(1)
-"""
-
-
 class Solution(object):
+    """
+    Find the length of the longest substring without duplicate characters
+    s = "abcabcbb" => "abc" => 3
+    s = "bbbbb" => "b" => 1
+    s = "pwwkew" => "wke" => 3
+    Solution: sliding window + pointer
+    Time complexity: O(n)
+    Space complexity: O(1)
+    """
+
     def lengthOfLongestSubstring(self, s):
         longest, l, curr = 0, -1, 0
         hash_s = {}
@@ -39,6 +24,17 @@ class Solution(object):
                     hash_s[s[l]] -= 1
                     curr -= 1
         return longest
+
+    """
+    Given a string s and an integer k. You can choose any character and 
+    change it to any other uppercase English character at most k times.
+    Return the length of the longest substring containing the same letter.
+    s = "ABAB" k = 2 => "AAAA" => 4
+    s = "AABABBA" k = 1 => "AAABBA" => 4
+    Solution: sliding window + pointer
+    Time complexity: O(n)
+    Space complexity: O(1)
+    """
 
     def characterReplacement(self, s, k):
         hash_table, l, max_count = {}, -1, 0

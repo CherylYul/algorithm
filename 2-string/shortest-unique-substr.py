@@ -22,8 +22,3 @@ def shortest_unique_substr(s):
     if result == float("inf"):
         return -1
     return result
-
-
-print(shortest_unique_substr("abaaba"))  # 2
-print(shortest_unique_substr("zyzyzyz"))  # 5
-print(shortest_unique_substr("aabbbabaaa"))  # 3
