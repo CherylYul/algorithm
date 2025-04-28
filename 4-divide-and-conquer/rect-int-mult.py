@@ -1,3 +1,4 @@
+# karatsuba multiplication algorithm
 def rectIntMult(x, y):
     if x < 10 or y < 10:
         return x * y
