@@ -25,3 +25,24 @@ class Solution(object):
         curr = [0] * k
         comb(n, k, 0, curr, result)
         return result
+
+    # use stack: slower
+    def combine2(self, n, k):
+        if k == 0:
+            return [[]]
+
+        result = []
+        stack = [[]]
+
+        while stack:
+            current = stack.pop()
+            start = current[-1] + 1 if current else 1
+
+            for i in range(start, n + 1):
+                new_combo = current + [i]
+                if len(new_combo) == k:
+                    result.append(new_combo)
+                else:
+                    stack.append(new_combo)
+
+        return result
