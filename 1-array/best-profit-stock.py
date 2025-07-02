@@ -20,3 +20,19 @@ class Solution(object):
             profit = prices[curr] - prices[l]
             best_profit = max(profit, best_profit)
         return best_profit
+
+    def maxProfit2(self, prices):
+        l, best = 0, 0
+        for i in range(1, len(prices)):
+            profit = prices[i] - prices[l]
+            if profit > best:
+                best = profit
+            if profit < 0:
+                l = i
+        return best
+
+
+"""
+1. only move pointer l when the profit is negative, which means there is a lower price to buy
+2. otherwise, just keep the pointer, since the best profit is always saved in best
+"""
