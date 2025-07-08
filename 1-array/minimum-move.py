@@ -1,15 +1,12 @@
-# There is an array A of N integers sorted in non-decreasing order.
-# In 1 move, you can either remove an integer from A or insert an integer before or after any element of A.
-# The goal is to achieve an array in which all values X that are present in the array occur exactly X times.
-# Ex: A = [1, 1, 3, 4, 4, 4] => remove 1, remove 3, add 4 => 3 steps [1, 4, 4, 4, 4]
-# Ex: A = [1, 2, 2, 2, 5, 5, 5, 8] => remove 8, remove 2, add 5, add 5 => 4 steps [1, 2, 2, 5, 5, 5, 5, 5]
-
-# counting elements subjects
-# Đếm mỗi thành phần trong array chiếm bao nhiêu
-# Nếu số lần xuất hiện lớn hơn hoặc bằng nửa thì cần giảm số lần xuất hiện
-# Ngược lại cần tăng số lần xuất hiện
-# Trả về số bước cần thiết
-# Time complexity: O(N)
+"""
+Minimum Moves to Make Array Elements Equal
+There is an array A of N integers sorted in non-decreasing order.
+In 1 move, you can either remove an integer from A or insert an integer before or after any element of A.
+The goal is to achieve an array in which all values X that are present in the array occur exactly X times.
+Solution: counting elements subjects
+Time complexity: O(N)
+Space complexity: O(N)
+"""
 
 
 def solution(A):
@@ -44,4 +41,4 @@ for test in test_cases:
     A, expected = test["A"], test["expected"]
     print(solution(A) == expected)
 
-# python3 nab/min-add-remove.py
+# python3 1-array/minimum-move.py
