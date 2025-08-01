@@ -4,7 +4,7 @@ Given an integer array nums, return an array answer such that answer[i]
 is equal to the product of all the elements of nums except nums[i].
 Input: nums = [1,2,3,4] => [24,12,8,6]
 Input: nums = [-1,1,0,-3,3] => [0,0,9,0,0]
-Solution: traverse more than 1
+Techniques: Prefix and Suffix Products
 Time complexity: O(n)
 Space complexity: O(n)
 """
