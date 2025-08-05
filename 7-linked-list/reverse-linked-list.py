@@ -1,7 +1,8 @@
 """
-Solution: two pointers
-Time Complexity: O(N)
-Space Complexity: O(1)
+Leet code 206: Reverse Linked List
+Techniques: iterative, two pointers
+Time complexity: O(n)
+Space complexity: O(1)
 """
 
 
