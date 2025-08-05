@@ -1,8 +1,8 @@
 """
-Merge Two Sorted Lists
-Solution: dummy node and pointer
-Time Complexity: O(n + m), where n and m are the lengths of the two lists
-Space Complexity: O(1), we reuse existing nodes, no extra list or array is created.
+Leet Code 21: Merge Two Sorted Lists
+Techniques: linked list manipulation
+Time complexity: O(n)
+Space complexity: O(1)
 """
 
 
