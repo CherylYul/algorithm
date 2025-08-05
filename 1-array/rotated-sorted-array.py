@@ -1,23 +1,13 @@
+"""
+Leet code 33: Search in Rotated Sorted Array
+Techniques: binary search
+Time complexity: O(log n)
+Space complexity: O(1)
+"""
+
+
 class Solution(object):
     def search(self, nums, target):
-        n = len(nums)
-        pivot = n - 1
-        if nums[pivot] == target:
-            return pivot
-        if nums[pivot] < target:
-            for i in range(0, n - 1):
-                if nums[i] == target:
-                    return i
-                if nums[i + 1] < nums[i]:
-                    return -1
-        for i in range(n - 2, -1, -1):
-            if nums[i] == target:
-                return i
-            if nums[i - 1] > nums[i]:
-                return -1
-        return -1
-
-    def search2(self, nums, target):
         l, r = 0, len(nums) - 1
         while l <= r:
             mid = l + (r - l) // 2
