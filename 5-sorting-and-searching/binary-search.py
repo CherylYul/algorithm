@@ -1,10 +1,8 @@
 """
-Given an array of integers nums which is sorted in ascending order,
-and an integer target, write a function to search target in nums.
-If target exists, then return its index. Otherwise, return -1.
-Time complexity: O(log n)
-Space complexity: O(1)
-Solution: binary search
+Leet Code 704: Binary Search
+Technique: Binary Search
+Complexity: O(log n) for the binary search
+Space Complexity: O(1)
 """
 
 
