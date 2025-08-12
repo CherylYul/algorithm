@@ -35,3 +35,17 @@ class Solution(object):
                 s.pop()
             s.append(val)
         return len(s)
+
+    def maxChunksToSorted(self, arr):
+        chunks = 1
+        right_min = [0] * len(arr)
+        right_min[-1] = arr[-1]
+        for i in range(len(arr) - 2, -1, -1):
+            right_min[i] = min(right_min[i + 1], arr[i])
+        print(right_min)
+        max_val = -float("inf")
+        for i in range(len(arr) - 1):
+            max_val = max(max_val, arr[i])
+            if max_val <= right_min[i + 1]:
+                chunks += 1
+        return chunks
