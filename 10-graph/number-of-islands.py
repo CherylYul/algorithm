@@ -9,6 +9,28 @@ from collections import deque
 
 
 class Solution(object):
+    # DFS
+    def numIslands(self, grid):
+        row, col = len(grid), len(grid[0])
+
+        def traverse(r, c):
+            if r < 0 or c < 0 or r >= row or c >= col or grid[r][c] != "1":
+                return
+            grid[r][c] = "0"
+            traverse(r + 1, c)
+            traverse(r - 1, c)
+            traverse(r, c + 1)
+            traverse(r, c - 1)
+
+        count = 0
+        for r in range(row):
+            for c in range(col):
+                if grid[r][c] == "1":
+                    count += 1
+                    traverse(r, c)
+        return count
+
+    # BFS
     def numIslands(self, grid):
         row, col = len(grid), len(grid[0])
         visited = set()
