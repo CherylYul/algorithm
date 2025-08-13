@@ -1,14 +1,8 @@
 """
-Leetcode 994. Rotting Oranges
-In a given grid, each cell can have one of three values:
-0 representing an empty cell,
-1 representing a fresh orange, or
-2 representing a rotten orange.
-Every minute, any fresh orange that is adjacent (4-directionally) to a rotten orange becomes rotten.
-Return the minimum number of minutes that must elapse until no cell has a fresh orange.
-Time complexity: O(nxm)
-Space complexity: O(nxm)
-Techniques: BFS, Queue
+Leet code 994: Rotting Oranges
+Techniques: BFS
+Complexity: O(m * n) where m is the number of rows and n is the number of columns
+Space Complexity: O(m * n) for the queue
 """
 
 from collections import deque
@@ -17,7 +11,8 @@ from collections import deque
 class Solution(object):
     def orangesRotting(self, grid):
         row, col = len(grid), len(grid[0])
-        have_orange, rotten_orange = 0, []
+        have_orange = 0
+        rotten_orange = []
         for r in range(row):
             for c in range(col):
                 if grid[r][c] != 0:
@@ -29,7 +24,7 @@ class Solution(object):
             return 0
         if rotten_nums == 0:
             return -1
-        time = 0
+        minute = 0
         directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]
         q = deque([rotten_orange])
         while q:
@@ -46,9 +41,9 @@ class Solution(object):
                         rotten_nums += 1
                         grid[next_r][next_c] = 2
                         next_time.append((next_r, next_c))
-            time += 1
             if next_time != []:
+                minute += 1
                 q.append(next_time)
         if rotten_nums < have_orange:
             return -1
-        return time - 1
+        return minute
