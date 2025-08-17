@@ -8,18 +8,32 @@ A move can be performed only if there is no other player already standing on the
 """
 
 
-def solution(A):
-    for i in A:
-        if i in "ud":
-            continue
+def performMoves(str):
+    empty, count = True, 0
+    for move in str:
+        if move == "^" or move == "v":
+            count += 1
+            empty = True
+        if move == "<" and empty:
+            count += 1
+        if move == ">":
+            empty = False
+    if str[-1] == ">":
+        count += 1
+    return count
 
 
 test_cases = [
-    {"A": "lrud", "expected": 2},
+    {"input": "><^^", "expected": 2},
+    {"input": "><><", "expected": 0},
+    {"input": "><^v", "expected": 2},
+    {"input": "><^<", "expected": 2},
+    {"input": "><^>v", "expected": 2},
+    {"input": "><^>v<", "expected": 3},
 ]
 
 for test in test_cases:
-    A, expected = test["A"], test["expected"]
-    print(solution(A) == expected)
+    input, expected = test["input"], test["expected"]
+    print(performMoves(input) == expected)
 
-# python3 1-array/minimum-move.py
+# python3 2-string/move-players.py
