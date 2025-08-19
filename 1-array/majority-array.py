@@ -1,33 +1,33 @@
 """
-Solution1: counter
-Time complexity: O(n)
-Space complexity: O(n)
-
-Solution2: sorting and return the middle element
-Time complexity: O(n log n)
-Space complexity: O(1)
-
-Solution3: Boyer-Moore Voting Algorithm
-Time complexity: O(n)
-Space complexity: O(1)
+Leet code 169: Majority Element
+Techniques: Hash Map, Sorting, Boyer-Moore Voting Algorithm, Bit Manipulation, Divide and Conquer, Randomization (6 solutions)
+Complexity: O(n) where n is the length of nums, O(n log n) for sorting
+Space Complexity: O(n) for the hash map, O(1) for sorting and Boyer-Moore Voting Algorithm
 """
 
 
 class Solution(object):
+    # Hash Map
     def majorityElement(self, nums):
-        counter = {}
+        hash_map = {}
         for num in nums:
-            counter[num] = counter.get(num, 0) + 1
-        best_key = 0
-        best = 0
-        for key in counter:
-            if counter[key] > best:
-                best = counter[key]
-                best_key = key
+            hash_map[num] = hash_map.get(num, 0) + 1
+            if hash_map[num] > len(nums) / 2:
+                return num
 
-        return best_key
+    # Sorting
+    def majorityElement(self, nums):
+        nums.sort()
+        return nums[len(nums) / 2]
 
-    def majorityElement2(self, nums):
-        mid = len(nums) // 2
-        nums = sorted(nums)
-        return nums[mid]
+    # Boyer-Moore Voting Algorithm
+    def majorityElement(self, nums):
+        count, majority = 1, nums[0]
+        for i in range(1, len(nums)):
+            if count == 0 and nums[i] != majority:
+                count, majority = 1, nums[i]
+            elif nums[i] == majority:
+                count += 1
+            else:
+                count -= 1
+        return majority
