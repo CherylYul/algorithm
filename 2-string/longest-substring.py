@@ -8,6 +8,27 @@ Space complexity: O(1)
 
 class Solution(object):
     def lengthOfLongestSubstring(self, s):
+        l, best, hash_map = 0, 0, {}
+        for i in range(len(s)):
+            hash_map[s[i]] = hash_map.get(s[i], 0) + 1
+            while hash_map[s[i]] > 1:
+                hash_map[s[l]] -= 1
+                l += 1
+                continue
+            best = max(best, i - l + 1)
+        return best
+
+    def lengthOfLongestSubstring(self, s):
+        l, best, hash_set = 0, 0, set()
+        for i in range(len(s)):
+            while s[i] in hash_set:
+                hash_set.remove(s[l])
+                l += 1
+            hash_set.add(s[i])
+            best = max(best, i - l + 1)
+        return best
+
+    def lengthOfLongestSubstring(self, s):
         longest, l, curr = 0, -1, 0
         hash_s = {}
         for char in s:
