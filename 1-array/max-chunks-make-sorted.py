@@ -30,7 +30,7 @@ class Solution(object):
         s = []
         for i in range(len(arr)):
             val = arr[i]
-            while len(s) > 0 and s[-1] > arr[i]:
+            while s and s[-1] > arr[i]:
                 val = max(val, s[-1])
                 s.pop()
             s.append(val)
